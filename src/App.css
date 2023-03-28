@@ -4,6 +4,7 @@ background-color: white;
 min-height: 100vh;
 font-family:Georgia, 'Times New Roman', Times, serif
 }
+
 .globalMsg{
   text-align: center;
   background-color: rgba(28, 26, 26, 0.853);
@@ -16,20 +17,22 @@ font-family:Georgia, 'Times New Roman', Times, serif
 /* header*/
 .header{
   background-color: antiquewhite;
- box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-
 }
+
+.nav-head{
+background-color: antiquewhite;
+color: white !important;
+margin: 0;
+box-shadow: inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2);
+}
+
 .fa-header{
    padding: 10px;
-
 }
 .fa-cart-header{
   border: 1px solid rgba(128, 128, 128, 0.386);
   border-radius: 10px;
   padding: 12px;
-
- 
-
 }
 .searchBar{
   border: 1px solid rgba(128, 128, 128, 0.985);
@@ -41,9 +44,11 @@ font-family:Georgia, 'Times New Roman', Times, serif
 
 }
 
-
+/* main page  */
 .mainPage{
   min-height: 80vh;
+  margin: 0;
+
 }
 .footer{
   border-top: 1px solid grey;
@@ -63,3 +68,60 @@ font-family:Georgia, 'Times New Roman', Times, serif
 .f-last{
   background-color: rgba(106, 111, 111, 0.599);
 }
+/* slideshow */
+.caption-area{
+  background-color: rgba(37, 191, 222, 0.274); 
+  padding-bottom: 20px;
+  clip-path: ellipse(50% 100% at 50% 0%);
+  margin-bottom: 20p;
+}
+
+/* card  */
+.card:hover{
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+border: 1px solid rgba(128, 128, 128, 0.482);
+}
+
+.cardButton:hover{
+  background-color: rgba(219, 21, 21, 0.881) !important;
+  border: 1px solid rgba(128, 128, 128, 0.482);
+
+}
+/* banner */
+.banner{
+  width: 80%;
+  background-color: rgb(219, 141, 163);
+  background: black;
+  color: white;
+  border-radius: 10px;
+  padding: 5px;
+  margin-bottom: 10px;
+ 
+}
+.banner-button{
+ width: 80%;
+}
+.sticky-head{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  z-index: 1;
+
+}
+.scroller{
+  padding-top: 210px; /* height of the fixed header */
+
+}
+@media (max-width: 768px) {
+  .scroller {
+    padding-top: 210px; /* adjust the padding for smaller screens */
+  }
+
+}
+
+
+
+
+

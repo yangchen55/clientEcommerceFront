@@ -1,28 +1,37 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import Banner from "../../components/Banner";
 import { Footer } from "./Footer";
 import { GlobalMsg } from "./GlobalMsg";
 import { Header } from "./Header";
+import NavHead from "./NavHead";
 
 
-export const AdminLayout = ({ children }) => {
+export const AdminLayout = ({ slideshow, productCard }) => {
   return (
-    <div>
-      <GlobalMsg />
-      <Header />
-      <Container className="mainPage">
-        <Container fluid>
-          <Row>
-            {/* <Col xs="3" className="side-bar bg-dark text-light">
-              <SideBar />
-            </Col> */}
-            <Col>{children}</Col>
-          </Row>
-        </Container>
-      </Container>
+    <>
+      <div className="sticky-head">
+        <GlobalMsg />
+        <Header />
+        <NavHead />
+      </div >
+      <div className="scroller">
+        {slideshow}
+        <Container className="mainPage m-5">
 
-      <Footer />
-    </div>
+          <Row className="d-flex justify-content-around">
+            <Col lg={3} md={6} sm={12}>{productCard}</Col>
+            <Col lg={3} md={6} sm={12}>{productCard}</Col>
+            <Col lg={3} md={6} sm={12}>{productCard}</Col>
+            <Col lg={3} className="d-none d-md-block" md={6} sm={12}>{productCard} </Col>
+          </Row>
+
+        </Container>
+        <Banner />
+
+        <Footer />
+      </div>
+
+    </>
   );
 };

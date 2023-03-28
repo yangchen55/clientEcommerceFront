@@ -10,13 +10,10 @@ import myLogo from './assets/b.png';
 function App() {
   return (
     <div className="App">
-
       <Helmet>
         <title>Feminal Fashion</title>
         <link className="fa-3x" rel="shortcut icon" href={myLogo} type="image/png" />
       </Helmet>
-
-
 
       <Dashboard />
 
