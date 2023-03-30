@@ -4,6 +4,7 @@ import { Alert, Spinner } from "react-bootstrap";
 import { useSearchParams } from "react-router-dom";
 import { postEmailVerification } from "../../helper/axios";
 import LoginRegisterLayout from "../layout/LoginRegisterLayout";
+import Login from "../login/Login";
 
 export const NewAccVerify = () => {
   // call the api with the code and email
@@ -32,7 +33,7 @@ export const NewAccVerify = () => {
   return (
     <>
       < LoginRegisterLayout />
-      <div className="main p-5 d-flex justify-content-center align-items-center">
+      <div className="main p-2 d-flex justify-content-center align-items-center">
         {response?.message ? (
           <Alert variant={response.status === "success" ? "success" : "danger"}>
             {response?.message}
@@ -41,6 +42,7 @@ export const NewAccVerify = () => {
           <Spinner animation="border" variant="primary" className="fs-1" />
         )}
       </div>
+      <Login />
 
     </>
   );

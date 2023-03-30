@@ -41,3 +41,13 @@ export const postEmailVerification = async (data) => {
     console.log(obj)
     return fetchProcessor(obj);
 };
+
+export const loginUser = async (loginData) => {
+    const url = userApi + "/login";
+    const obj = {
+        method: "post",
+        url,
+        data: loginData,
+    };
+    return fetchProcessor(obj);
+};

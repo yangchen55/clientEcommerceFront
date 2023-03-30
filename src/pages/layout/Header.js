@@ -28,7 +28,7 @@ export const Header = () => {
 
         <Col className="mt-3" xs={6} md={4} lg={4}>
           <div className="d-flex justify-content-around">
-            <Link to="/register" className="d-flex flex-column align-items-center header-link" >
+            <Link to="/login" className="d-flex flex-column align-items-center header-link" >
               <i className="fa-solid fa-user fa-header"></i>
               <span style={{ fontSize: '0.7rem' }}>login / sign up</span>
             </Link>

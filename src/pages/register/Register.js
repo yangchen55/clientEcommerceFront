@@ -26,7 +26,7 @@ const Register = () => {
         },
         {
             label: "Phone",
-            type: "text",
+            type: "number",
             name: "phone",
             placeholder: "02345",
         },
@@ -68,8 +68,11 @@ const Register = () => {
         if (confirmPassword !== rest.password) {
             toast.error("Password and confirm password do not match!")
         }
-        const { status, message, link } = await registerNewUser(rest)
-        console.log(status)
+        const pending = registerNewUser(rest)
+        toast.promise(pending, { pending: "Please wait ...." });
+
+        const { status, message, link } = await pending;
+
 
         toast[status](
             <div>
@@ -91,7 +94,7 @@ const Register = () => {
             <LoginRegisterLayout />
             <Container className="mt-4">
                 <Row className="justify-content-center">
-                    <Col sm={12} md={5} >
+                    <Col sm={12} md={8} lg={5}>
                         <Form
                             onSubmit={handleOnSubmit}
                             className="p-5 rounded shadow-lg" >
@@ -100,7 +103,6 @@ const Register = () => {
                             {inputes.map((item, i) => (
                                 <CustomeInputeField key={i} {...item} onChange={handleOnChange} style={{ width: '100%' }} />
                             ))}
-
                             <Button variant="danger" style={{ width: '100%' }} type="submit">
                                 verify acccount
 
@@ -109,7 +111,7 @@ const Register = () => {
                     </Col>
                 </Row>
 
-                <p className="mt-5 text-center">pleaser vie</p>
+                <p className="mt-5 text-center">Adhered to Feminal Policy</p>
             </Container>
 
 

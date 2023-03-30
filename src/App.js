@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet';
 import myLogo from './assets/b.png';
 import Register from './pages/register/Register';
 import { NewAccVerify } from './pages/verify/NewAccVerify';
+import Login from './pages/login/Login';
 
 
 
@@ -23,6 +24,7 @@ function App() {
 
           <Route path="/register" element={<Register />} />
           <Route path="verify" element={<NewAccVerify />} />
+          <Route path="login" element={<Login />} />
 
 
           {/* private router */}
