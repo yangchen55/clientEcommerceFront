@@ -51,3 +51,23 @@ export const loginUser = async (loginData) => {
     };
     return fetchProcessor(obj);
 };
+
+export const fetchOtpRequest = async (data) => {
+    const url = userApi + "/request-otp";
+    const obj = {
+        method: "post",
+        url,
+        data,
+    };
+    return fetchProcessor(obj);
+};
+
+export const resetPassRequest = async (data) => {
+    const url = userApi + "/reset-password";
+    const obj = {
+        method: "patch",
+        url,
+        data,
+    };
+    return fetchProcessor(obj);
+};

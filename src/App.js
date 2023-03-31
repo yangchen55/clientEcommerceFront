@@ -8,6 +8,7 @@ import myLogo from './assets/b.png';
 import Register from './pages/register/Register';
 import { NewAccVerify } from './pages/verify/NewAccVerify';
 import Login from './pages/login/Login';
+import ResetPassword from './pages/reset-password/ResetPassword';
 
 
 
@@ -18,13 +19,14 @@ function App() {
         <title>Feminal Fashion</title>
         <link className="fa-3x" rel="shortcut icon" href={myLogo} type="image/png" />
       </Helmet>
-      <Browser>
+      <Browser>p
         <Routes>
           {/* public router */}
 
           <Route path="/register" element={<Register />} />
           <Route path="verify" element={<NewAccVerify />} />
           <Route path="login" element={<Login />} />
+          <Route path="reset-password" element={<ResetPassword />} />
 
 
           {/* private router */}

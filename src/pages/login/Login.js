@@ -7,6 +7,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import { requestSuccess } from "./authSlice";
 
+
+
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -35,7 +37,6 @@ const Login = () => {
         if (notRegisteredUser?.email) {
             navigate("/register")
         } else {
-
             // user?._id ? navigate(origin) : navigate("/login")
             user?._id ? navigate("/") && dispatch(requestSuccess({})) : navigate("/login")
         }
@@ -46,8 +47,10 @@ const Login = () => {
     return (
 
         <div>
-            {/* <LoginRegisterLayout /> */}
+            <LoginRegisterLayout />
+
             <Container className="mt-2">
+
                 <Row className="justify-content-center">
                     <Col sm={12} md={8} lg={5}>
                         <Form

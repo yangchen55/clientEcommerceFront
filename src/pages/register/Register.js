@@ -7,6 +7,7 @@ import { registerNewUser } from "../../helper/axios"
 import { Alert, Spinner } from "react-bootstrap";
 
 
+
 const Register = () => {
     const [response, setResponse] = useState(true);
     const inputes = [
@@ -95,10 +96,13 @@ const Register = () => {
             <Container className="mt-4">
                 <Row className="justify-content-center">
                     <Col sm={12} md={8} lg={5}>
+
                         <Form
                             onSubmit={handleOnSubmit}
                             className="p-5 rounded shadow-lg" >
                             <h3 className="text-center">Register </h3>
+
+                            <em>I already have an account ?<a href="/login">Login</a> </em>
                             <hr />
                             {inputes.map((item, i) => (
                                 <CustomeInputeField key={i} {...item} onChange={handleOnChange} style={{ width: '100%' }} />
@@ -108,11 +112,14 @@ const Register = () => {
 
                             </Button>
                         </Form>
+
                     </Col>
+
                 </Row>
 
                 <p className="mt-5 text-center">Adhered to Feminal Policy</p>
             </Container>
+
 
 
         </div >
