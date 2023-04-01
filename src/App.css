@@ -22,6 +22,9 @@ font-family:Georgia, 'Times New Roman', Times, serif
 .header-link{
   color: black;
 }
+.dropdown-toggle::after {
+  display: none;
+}
 
 
 .nav-head{

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Footer } from "../layout/Footer";
 import { Header } from "../layout/Header";
@@ -8,8 +8,10 @@ import LoginRegisterLayout from "../layout/LoginRegisterLayout";
 import { RequestOTP } from "../../components/request-otp/RequestOTP";
 import { fetchOtpRequest, resetPassRequest } from "../../helper/axios";
 import { PasswordRestFrm } from "../../components/reset-password/PasswordRestFrm";
+import { useNavigate } from "react-router-dom";
 
 const ResetPassword = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [showForm, setShowForm] = useState("otp");
   const [response, setResponse] = useState({});
@@ -63,8 +65,19 @@ const ResetPassword = () => {
       }
     );
     setResponse({ status, message });
+
+
+
   };
 
+  useEffect(() => {
+    if (response.status === 'success' && response.message.includes("updated")) {
+      navigate("/login");
+    } else {
+      // Do nothing
+    }
+
+  }, [response])
   const forms = {
     otp: (
       <RequestOTP
