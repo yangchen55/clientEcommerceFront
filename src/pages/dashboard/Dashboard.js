@@ -1,6 +1,7 @@
 import React from 'react'
-import ProductCard from '../../components/ProductCard'
+import ProductCard from '../Product/ProductCard'
 import { AdminLayout } from '../layout/AdminLayout'
+
 import Slideshow from './Slideshow'
 
 

@@ -2,10 +2,10 @@ import React, { Children, useEffect, useRef } from "react";
 import { Container, Form, Button, Row, Col } from 'react-bootstrap'
 import LoginRegisterLayout from '../layout/LoginRegisterLayout'
 import { useDispatch, useSelector } from "react-redux";
-import { loginAction } from "./authAction";
+import { autoLogin, loginAction } from "./authAction";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
-import { requestSuccess } from "./authSlice";
+
 
 
 
@@ -17,8 +17,10 @@ const Login = () => {
     const passRef = useRef("");
     const location = useLocation();
     const { isLoading, user, notRegisteredUser } = useSelector((state) => state.user);
+    console.log(user, "i am from login n empty")
 
-    const origin = location?.state?.from?.pathname || "/dashboard";
+    const origin = location?.state?.from?.pathname || "/";
+
     const handleOnSubmit = (e) => {
         e.preventDefault()
         const formDt = {
@@ -28,20 +30,24 @@ const Login = () => {
         if (!formDt.email || !formDt.password) {
             return alert("Please fill in both the fields!");
         }
-
         // disptach login action to call api
         dispatch(loginAction(formDt));
-
         console.log(notRegisteredUser)
     }
     useEffect(() => {
+        if (user?._id) {
+            navigate(origin)
+        } else {
+
+            dispatch(autoLogin())
+        };
         if (notRegisteredUser?.email) {
             navigate("/register")
         } else {
-            // user?._id ? navigate(origin) : navigate("/login")
-            user?._id ? navigate("/") && dispatch(requestSuccess({})) : navigate("/login")
+            // user?._id ? navigate(origin) : dispatch(autoLogin())
+            // user?._id ? navigate("/") : navigate("/login")
         }
-    }, [notRegisteredUser, dispatch, user?._id, origin, navigate])
+    }, [user?._id, navigate, origin, dispatch, notRegisteredUser])
 
 
 

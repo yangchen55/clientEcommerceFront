@@ -1,0 +1,18 @@
+.tabColumn{
+    padding: 20px;
+    min-height: 80%;
+    border-right: solid 1px rgb(156, 150, 150) ;
+}
+.nav-link {
+  position: relative;
+}
+
+.nav-link:hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: rgb(26, 137, 54);
+}

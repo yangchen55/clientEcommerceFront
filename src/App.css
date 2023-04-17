@@ -90,6 +90,15 @@ box-shadow: inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2);
 border: 1px solid rgba(128, 128, 128, 0.482);
 }
 
+.cardButton1{
+width: 100%;
+background: white; 
+color: black;
+border: 1px solid grey;
+outline: none;
+
+  }
+
 .cardButton:hover{
   background-color: rgba(219, 21, 21, 0.881) !important;
   border: 1px solid rgba(128, 128, 128, 0.482);
@@ -115,7 +124,7 @@ border: 1px solid rgba(128, 128, 128, 0.482);
   left: 0;
   width: 100%;
   background-color: #fff;
-  z-index: 1;
+  z-index: 5;
 
 }
 .scroller{
@@ -138,6 +147,7 @@ border: 1px solid rgba(128, 128, 128, 0.482);
   padding: 20px;
   
 }
+
 
 
 

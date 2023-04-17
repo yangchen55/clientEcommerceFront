@@ -1,5 +1,5 @@
 import { Row, Col, Button, Form } from "react-bootstrap";
-import React, { Children, useEffect, useRef } from "react";
+import React, { Children, useEffect, useRef, useState } from "react";
 
 import myLogo from '../../assets/a.png';
 import { Link } from "react-router-dom";
@@ -12,21 +12,30 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 
 
 export const Header = () => {
+  const [accessJWT1, setAccessJWT] = useState(null);
   const dispatch = useDispatch();
+
   const { user } = useSelector((state) => state.user);
-  console.log(user, "i am from header")
+  const { carts } = useSelector((state) => state.product);
+  console.log(carts, "i am form carts")
+
+
 
 
   const handleOnLogout = () => {
     sessionStorage.removeItem("accessJWT");
     localStorage.removeItem("refreshJWT");
+    // setAccessJWT(null)
     dispatch(requestSuccess({}))
+    return <href to="/" />;
+
+
 
   };
   useEffect(() => {
-    console.log('User has changed:', user);
-
-  }, [user])
+    const jwt = sessionStorage.getItem("accessJWT");
+    setAccessJWT(jwt)
+  }, [accessJWT1, dispatch, user])
 
   return (
     <div className="header md-2">
@@ -52,7 +61,7 @@ export const Header = () => {
 
         <Col className="mt-3" xs={6} md={4} lg={4}>
           <div className="d-flex justify-content-around">
-            {user && user._id ? (
+            {accessJWT1 ? (
 
               <Nav >
                 <NavDropdown title={<span className="d-flex flex-column  header-link">
@@ -67,18 +76,22 @@ export const Header = () => {
                         <span className="fw-bold">Hi {user.fName}! welcome to the Account</span>
                       </Col>
                       <Col xs={12} className="text-end">
-                        <Button variant="warning" onClick={handleOnLogout}>Logout</Button>
+                        <Link to="/">
+                          <Button variant="warning" onClick={handleOnLogout}>Logout</Button>
+                        </Link>
                       </Col>
                     </Row>
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action3">
-                    <i class="fa-solid fa-bag-shopping me-5"></i>
-                    <span className="fw-bold"> Your orders </span>
+                  <NavDropdown.Item>
+                    <Link to="account">
+                      <i class="fa-solid fa-bag-shopping me-5"></i>
+                      <span className="fw-bold"> Your orders </span>
+                    </Link>
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="#action5">
+                  <NavDropdown.Item href="profile">
                     <i class="fa-solid fa-user-pen me-5"> </i>
-                    <span className="fw-bold"> Your Details </span>
+                    <span className="fw-bold"> Profile </span>
                   </NavDropdown.Item>
                   <NavDropdown.Item href="#action5">
                     <i class="fa-brands fa-cc-visa me-5"></i>
@@ -107,7 +120,7 @@ export const Header = () => {
 
             <Link to="/" className="d-flex flex-column align-items-center header-link" >
               <i class="fa-solid fa-cart-shopping fa-cart-header"></i>
-              <span style={{ fontSize: '0.7rem' }}>$0.00</span>
+              <span style={{ fontSize: '0.7rem' }}>{carts[0]?.reQty * carts[1]?.price}</span>
             </Link>
 
 

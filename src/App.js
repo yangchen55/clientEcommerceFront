@@ -9,6 +9,9 @@ import Register from './pages/register/Register';
 import { NewAccVerify } from './pages/verify/NewAccVerify';
 import Login from './pages/login/Login';
 import ResetPassword from './pages/reset-password/ResetPassword';
+import ProfilePage from './pages/profile/ProfilePage';
+import PrivateDashboard from './pages/dashboard/PrivateDashboard';
+import Category from './pages/category/Category';
 
 
 
@@ -19,7 +22,7 @@ function App() {
         <title>Feminal Fashion</title>
         <link className="fa-3x" rel="shortcut icon" href={myLogo} type="image/png" />
       </Helmet>
-      <Browser>p
+      <Browser>
         <Routes>
           {/* public router */}
 
@@ -27,10 +30,13 @@ function App() {
           <Route path="verify" element={<NewAccVerify />} />
           <Route path="login" element={<Login />} />
           <Route path="reset-password" element={<ResetPassword />} />
-
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/category/:slug" element={<Category />} />
 
           {/* private router */}
-          <Route path="/" element={<Dashboard />} />
+
+          <Route path="account/profile" element={<ProfilePage />} />
+          <Route path="account" element={<PrivateDashboard />} />
 
 
         </Routes>

@@ -1,14 +1,27 @@
 import axios from "axios"
-const rootUrl = "http://localhost:8000/api/v1";
+const rootUrl = "http://localhost:8001/api/v1";
 const userApi = rootUrl + "/user";
+const productApi = rootUrl + "/product";
+const catApi = rootUrl + "/category";
 
-const fetchProcessor = async ({ method, url, data }) => {
+
+const fetchProcessor = async ({ method, url, data, token, isPrivate }) => {
     try {
+        const jwtToken = token || sessionStorage.getItem("accessJWT");
+
+        const headers = isPrivate
+            ? {
+                Authorization: jwtToken,
+            }
+            : null;
         const res = await axios({
             method,
             url,
-            data
+            data,
+            headers
+
         })
+        // console.log(res.data, "iam from axios")
         return res.data
     } catch (error) {
         return {
@@ -52,6 +65,47 @@ export const loginUser = async (loginData) => {
     return fetchProcessor(obj);
 };
 
+
+
+
+
+
+export const fetchAdminProfile = async () => {
+    const url = userApi + "/user-profile";
+    const obj = {
+        method: "get",
+        url,
+        isPrivate: true,
+    };
+    console.log(obj, "axios")
+
+    return fetchProcessor(obj);
+};
+
+
+export const updateProfile = async (data) => {
+    const url = userApi + "/user-profile";
+    const obj = {
+        method: "put",
+        url,
+        data
+    };
+    return fetchProcessor(obj);
+};
+
+export const fetchNewAccessJWT = async () => {
+    const url = userApi + "/new-accessjwt";
+    const token = localStorage.getItem("refreshJWT");
+
+    const obj = {
+        method: "get",
+        url,
+        isPrivate: true,
+        token,
+    };
+    return fetchProcessor(obj);
+}
+
 export const fetchOtpRequest = async (data) => {
     const url = userApi + "/request-otp";
     const obj = {
@@ -68,6 +122,31 @@ export const resetPassRequest = async (data) => {
         method: "patch",
         url,
         data,
+    };
+    return fetchProcessor(obj);
+};
+
+
+// Product 
+export const fetchProduct = async (_id) => {
+    const url = _id ? productApi + "/" + _id : productApi;
+    const obj = {
+        method: "get",
+        url,
+        // isPrivate: true,
+    };
+    console.log(obj)
+    return fetchProcessor(obj);
+};
+
+//category
+
+export const fetchCategory = async () => {
+    const url = catApi;
+    const obj = {
+        method: "get",
+        url,
+        // isPrivate: true,
     };
     return fetchProcessor(obj);
 };
