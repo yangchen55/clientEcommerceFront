@@ -16,9 +16,15 @@ export const Header = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.user);
-  const { carts } = useSelector((state) => state.product);
-  console.log(carts, "i am form carts")
+  const { cart } = useSelector((state) => state.cart);
 
+
+
+
+
+  const sum = cart.reduce((acc, curr) => {
+    return acc + parseInt(curr.shopQty) * parseInt(curr.price);
+  }, 0);
 
 
 
@@ -111,16 +117,14 @@ export const Header = () => {
             )}
 
 
-            {/* <Link to="/" className="d-flex flex-column align-items-center header-link" onClick={handleOnLogout}>
-              <i class="fa-solid fa-right-from-bracket p-2"></i>
-              <span style={{ fontSize: '0.7rem' }}>logout</span>
-            </Link> */}
 
 
 
-            <Link to="/" className="d-flex flex-column align-items-center header-link" >
-              <i class="fa-solid fa-cart-shopping fa-cart-header"></i>
-              <span style={{ fontSize: '0.7rem' }}>{carts[0]?.reQty * carts[1]?.price}</span>
+            <Link to="/order" className="d-flex flex-column align-items-center header-link" >
+              <i class="fa-solid fa-cart-shopping fa-cart-header">
+                <span> $ {sum}</span>
+              </i>
+
             </Link>
 
 

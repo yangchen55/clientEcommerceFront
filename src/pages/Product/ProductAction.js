@@ -12,7 +12,3 @@ export const fetchCatProductAction = (_id) => async (dispatch) => {
     status == "success" && dispatch(setProducts(products))
 }
 
-export const addtoCardAction = (item, reqty) => async (dispatch) => {
-    const payload = [reqty, item];
-    dispatch(setAddtoCard(payload))
-}

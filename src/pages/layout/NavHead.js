@@ -29,7 +29,7 @@ const NavHead = () => {
     useEffect(() => {
         dispatch(fetchCategoryAction());
     }, [dispatch]);
-    console.log(categories, "cathoprry")
+
 
 
     return (

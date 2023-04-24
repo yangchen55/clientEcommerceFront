@@ -12,6 +12,8 @@ import ResetPassword from './pages/reset-password/ResetPassword';
 import ProfilePage from './pages/profile/ProfilePage';
 import PrivateDashboard from './pages/dashboard/PrivateDashboard';
 import Category from './pages/category/Category';
+import ProductPage from './pages/Product/ProductPage';
+import Order from './pages/orders/Order';
 
 
 
@@ -32,11 +34,13 @@ function App() {
           <Route path="reset-password" element={<ResetPassword />} />
           <Route path="/" element={<Dashboard />} />
           <Route path="/category/:slug" element={<Category />} />
+          <Route path="/product/:slug" element={<ProductPage />} />
 
           {/* private router */}
 
           <Route path="account/profile" element={<ProfilePage />} />
           <Route path="account" element={<PrivateDashboard />} />
+          <Route path="/order/" element={<Order />} />
 
 
         </Routes>

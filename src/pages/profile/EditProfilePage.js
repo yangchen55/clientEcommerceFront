@@ -26,7 +26,7 @@ const EditProfilePage = ({ onCancel, user }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         const { _id, ...rest } = formDt;
-        console.log(_id, rest, "ahndfkj")
+
         // handle form submission
         dispatch(updateProfileAction({ _id, rest }))
     };
