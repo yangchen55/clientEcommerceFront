@@ -8,6 +8,7 @@ import { Header } from '../layout/Header';
 import NavHead from '../layout/NavHead';
 import { Footer } from '../layout/Footer';
 import { setAddtoCard } from "./CartSlice";
+import ProductCard from "./ProductCard";
 
 
 
@@ -32,7 +33,7 @@ const ProductPage = () => {
     const handleAddToCard = (e) => {
         e.preventDefault()
         //descructure the product infos
-        const { name, _id, qty, price, mainImage } = filterProduct;
+        const { name, _id, qty, price, mainImage, slug, description } = filterProduct;
 
 
 
@@ -40,7 +41,7 @@ const ProductPage = () => {
         // create an obj to send to the cart
         const obj = {
             shopQty: form,
-            name, _id, qty, price, mainImage
+            name, _id, qty, price, mainImage, slug, description
 
         }
         // send obj to slic to add to cart
@@ -58,12 +59,26 @@ const ProductPage = () => {
                 <Container className="mainPage">
                     <Row className="mt-5">
                         <Col>
-                            <Card style={{ width: '16rem' }}>
-                                <Card.Img variant="top" src={process.env.REACT_APP_DOMAIN + filterProduct?.mainImage.substr(6)} />
-                                <Card.Body>
-                                    <Card.Title>{filterProduct.name}</Card.Title>
-                                    <Card.Text> Price: {filterProduct.price}</Card.Text>
-                                    <Card.Text></Card.Text>
+
+                            <img src={process.env.REACT_APP_DOMAIN + filterProduct?.mainImage.substr(6)} height="80%" width="80%" />
+                            <h3>Product Details</h3>
+                            <hr></hr>
+                            <div>{filterProduct.description}</div>
+
+
+
+
+
+
+                        </Col>
+                        <Col>
+                            <Form onSubmit={handleAddToCard}>
+                                <Form.Group className="mb-3" controlId="formBasicPassword">
+                                    <h1> {filterProduct.name}</h1>
+                                    <h2> Price : $ {filterProduct.price}</h2>
+                                    <Form.Label>Quantity </Form.Label>
+                                    <Form.Control type="number" name="productQty" min="1" max={filterProduct.qty} defaultValue="1" onChange={handleOnChange}
+                                    />
                                     <RatingStar
                                         count={5}
                                         size={24}
@@ -71,28 +86,20 @@ const ProductPage = () => {
                                         value={filterProduct?.ratings}
                                         edit={false}
                                     />
-                                    <Card.Subtitle className="mb-2 text-muted"> Available: {filterProduct.qty}</Card.Subtitle>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                        <Col>
-                            <Form onSubmit={handleAddToCard}>
-                                <Form.Group className="mb-3" controlId="formBasicPassword">
-                                    <Form.Label>Quantity </Form.Label>
-                                    <Form.Control type="number" name="productQty" min="1" max={filterProduct.qty} defaultValue="1" onChange={handleOnChange}
-                                    />
                                 </Form.Group>
+                                <Card.Subtitle className="mb-2 text-muted"> Available: {filterProduct.qty}</Card.Subtitle>
 
                                 <Button className='cardButton' style={{ width: '100%', background: "white", color: "black", border: "1px solid grey" }}
                                     type="submit" >
                                     <i className="fa-solid fa-cart-plus" style={{ color: "#111213" }}> </i>
                                 </Button>
 
-
-
                             </Form>
                         </Col>
                     </Row>
+
+
+
 
 
 

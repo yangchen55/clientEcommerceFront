@@ -1,12 +1,33 @@
 import React from 'react'
-import { Container, Table } from 'react-bootstrap'
+import { Container, Row, Col, Button } from 'react-bootstrap'
 import { GlobalMsg } from '../layout/GlobalMsg'
 import { Header } from '../layout/Header'
 import { useDispatch, useSelector } from 'react-redux';
+import './order.css';
+import { Link } from 'react-router-dom';
+import ProductPage from '../Product/ProductPage';
+import { setRemoveFromCard, setUpdateCart } from '../Product/CartSlice';
 
 const Order = () => {
+    const dispatch = useDispatch()
     const { cart } = useSelector((state) => state.cart)
-    console.log(cart)
+
+    const sum = cart.reduce((acc, curr) => {
+        return acc + parseInt(curr?.shopQty) * parseInt(curr?.price);
+    }, 0);
+
+    const handleRemove = (id) => {
+        dispatch(setRemoveFromCard(id))
+    }
+    const handleOnQty = (id, e) => {
+        const { name, value } = e.target;
+        console.log(id)
+        dispatch(setUpdateCart({ id, name, value }))
+
+    }
+
+
+
     return (
         <>
             <div className="sticky-head">
@@ -15,39 +36,57 @@ const Order = () => {
             </div>
             <div className="scroller">
                 <Container className="mainPage">
-                    <Table striped bordered hover>
-                        <thead>
-                            <tr>
-                                <th>Product Name</th>
-                                <th>Details</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {cart.map((item, index) => (
-                                <tr key={index}>
-                                    <td>{item.name}</td>
-                                    <td>
-                                        <img
-                                            src={process.env.REACT_APP_DOMAIN + item?.mainImage.substr(6)}
-                                            width="80px"
-                                            alt="photos"
-                                        />
+                    <h2 className='text-center'>  Trolly - There are  {cart.length} items</h2>
+                    <hr></hr>
+                    {cart.map((item, index) => (
 
 
-                                    </td>
-                                    <td>{item.price}</td>
-                                    <td>{item.shopQty}</td>
+                        <Row key={index} className="order">
+                            <Col className='m-3'>
+                                <img
+                                    src={item?.mainImage && process.env.REACT_APP_DOMAIN + item.mainImage.substr(6)}
+                                    width="80px"
+                                    alt="photos"
+                                />
 
-                                </tr>
+                            </Col>
+
+                            <Col>
+                                <Link style={{ color: 'black', textDecoration: 'none' }} to={`/product/${item?.slug}`}> <bold> {item?.name} </bold> </Link>
+                                <div className='d-flex justify-content-around'>
+                                    <input type="number" name="shopQty" defaultValue={item?.shopQty} min={1} max={item?.qty} inputMode="numeric" style={{ appearance: 'textfield' }} onClick={(e) => handleOnQty(item?._id, e)} />
+                                    <span style={{ textDecoration: 'underline', cursor: 'pointer', color: 'grey' }} onClick={() => handleRemove(item?._id)}>remove</span>
+                                </div>
 
 
-                            ))}
+                            </Col>
+                            <Col className='text-end'>
+                                <h3>  ${item?.price}</h3>
+                            </Col>
+
+                        </Row>
 
 
-                        </tbody>
-                    </Table>
+
+
+
+
+                    ))}
+                    <hr>
+                    </hr>
+                    <Row className='m-5'>
+                        Total:  $ {sum}
+
+                        <Button className='cardButton m-3' style={{ width: '100%', background: "grey", color: "white", border: "1px solid grey" }} >
+                            <bold>CheckOut</bold>
+                        </Button>
+
+
+                    </Row>
+
+
+
+
                 </Container>
             </div >
 

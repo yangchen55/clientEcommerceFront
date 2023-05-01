@@ -9,6 +9,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import Order from "../orders/Order";
 
 
 export const Header = () => {
@@ -23,7 +24,7 @@ export const Header = () => {
 
 
   const sum = cart.reduce((acc, curr) => {
-    return acc + parseInt(curr.shopQty) * parseInt(curr.price);
+    return acc + parseInt(curr?.shopQty) * parseInt(curr?.price);
   }, 0);
 
 
@@ -112,6 +113,7 @@ export const Header = () => {
                 <Link to="/login" className="d-flex flex-column align-items-center header-link" >
                   <i className="fa-solid fa-user fa-header"></i>
                   <span style={{ fontSize: '0.7rem' }}>login / sign up</span>
+
                 </Link>
               </>
             )}
@@ -120,13 +122,15 @@ export const Header = () => {
 
 
 
-            <Link to="/order" className="d-flex flex-column align-items-center header-link" >
-              <i class="fa-solid fa-cart-shopping fa-cart-header">
+            <Link to="/order" className="d-flex flex-column align-items-center header-link">
+              <span className="badge bg-danger position-absolute top-20 start-100 translate-middle">
+                {cart.length}
+                <span className="visually-hidden">unread messages</span>
+              </span>
+              <i className="fa-solid fa-cart-shopping fa-cart-header">
                 <span> $ {sum}</span>
               </i>
-
             </Link>
-
 
           </div>
         </Col>

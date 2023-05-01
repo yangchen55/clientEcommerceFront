@@ -19,6 +19,7 @@
 }
 .header-link {
   color: black;
+  position: relative;
 }
 .dropdown-toggle::after {
   display: none;
@@ -131,4 +132,9 @@
   color: rgb(41, 97, 29);
   text-align: center;
   padding: 20px;
+}
+
+.scrollmenu {
+  overflow: auto;
+  white-space: nowrap;
 }
