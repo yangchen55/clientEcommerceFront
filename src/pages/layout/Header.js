@@ -26,6 +26,10 @@ export const Header = () => {
   const sum = cart.reduce((acc, curr) => {
     return acc + parseInt(curr?.shopQty) * parseInt(curr?.price);
   }, 0);
+  const totalQty = cart.reduce((acc, curr) => {
+    return acc + parseInt(curr?.shopQty);
+  }, 0);
+
 
 
 
@@ -35,9 +39,6 @@ export const Header = () => {
     // setAccessJWT(null)
     dispatch(requestSuccess({}))
     return <href to="/" />;
-
-
-
   };
   useEffect(() => {
     const jwt = sessionStorage.getItem("accessJWT");
@@ -91,15 +92,15 @@ export const Header = () => {
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item>
-                    <Link to="account">
+                    <Link to="/order/checkout">
                       <i class="fa-solid fa-bag-shopping me-5"></i>
                       <span className="fw-bold"> Your orders </span>
                     </Link>
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="profile">
+                  <Link to="/account">
                     <i class="fa-solid fa-user-pen me-5"> </i>
                     <span className="fw-bold"> Profile </span>
-                  </NavDropdown.Item>
+                  </Link>
                   <NavDropdown.Item href="#action5">
                     <i class="fa-brands fa-cc-visa me-5"></i>
                     <span className="fw-bold"> Payment </span>
@@ -124,7 +125,7 @@ export const Header = () => {
 
             <Link to="/order" className="d-flex flex-column align-items-center header-link">
               <span className="badge bg-danger position-absolute top-20 start-100 translate-middle">
-                {cart.length}
+                {totalQty}
                 <span className="visually-hidden">unread messages</span>
               </span>
               <i className="fa-solid fa-cart-shopping fa-cart-header">

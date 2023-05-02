@@ -3,6 +3,7 @@ const rootUrl = "http://localhost:8001/api/v1";
 const userApi = rootUrl + "/user";
 const productApi = rootUrl + "/product";
 const catApi = rootUrl + "/category";
+const paymentApi = rootUrl + "/payment";
 
 
 const fetchProcessor = async ({ method, url, data, token, isPrivate }) => {
@@ -21,7 +22,7 @@ const fetchProcessor = async ({ method, url, data, token, isPrivate }) => {
             headers
 
         })
-        // console.log(res.data, "iam from axios")
+
         return res.data
     } catch (error) {
         return {
@@ -39,9 +40,7 @@ export const registerNewUser = async (data) => {
         url,
         data,
     }
-    console.log(obj)
     return fetchProcessor(obj)
-
 }
 
 export const postEmailVerification = async (data) => {
@@ -51,7 +50,7 @@ export const postEmailVerification = async (data) => {
         url,
         data,
     };
-    console.log(obj)
+
     return fetchProcessor(obj);
 };
 
@@ -77,7 +76,7 @@ export const fetchAdminProfile = async () => {
         url,
         isPrivate: true,
     };
-    console.log(obj, "axios")
+
 
     return fetchProcessor(obj);
 };
@@ -135,7 +134,7 @@ export const fetchProduct = async (_id) => {
         url,
         // isPrivate: true,
     };
-    console.log(obj)
+
     return fetchProcessor(obj);
 };
 
@@ -148,5 +147,17 @@ export const fetchCategory = async () => {
         url,
         // isPrivate: true,
     };
+    return fetchProcessor(obj);
+};
+
+export const fetchPayment = async () => {
+    const url = paymentApi;
+    const obj = {
+        method: "get",
+        url,
+        // isPrivate: true,
+    };
+
+
     return fetchProcessor(obj);
 };

@@ -1,0 +1,9 @@
+.orderSummary {
+  background-color: rgba(128, 128, 128, 0.153);
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+.place_order {
+  background-color: rgb(32, 82, 24);
+  width: 100%;
+}

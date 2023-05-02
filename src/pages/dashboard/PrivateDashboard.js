@@ -12,6 +12,7 @@ import Container from 'react-bootstrap/Container';
 import './privateDashboard.css';
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import Checkout from '../checkout/Checkout';
 
 
 const PrivateDashboard = () => {
@@ -52,6 +53,7 @@ const PrivateDashboard = () => {
                         <Col sm={8}>
                             <Tab.Content>
                                 <Tab.Pane eventKey="first">
+                                    <Checkout />
 
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="second">

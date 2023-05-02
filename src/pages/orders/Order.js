@@ -4,9 +4,10 @@ import { GlobalMsg } from '../layout/GlobalMsg'
 import { Header } from '../layout/Header'
 import { useDispatch, useSelector } from 'react-redux';
 import './order.css';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import ProductPage from '../Product/ProductPage';
 import { setRemoveFromCard, setUpdateCart } from '../Product/CartSlice';
+import Checkout from '../checkout/Checkout';
 
 const Order = () => {
     const dispatch = useDispatch()
@@ -25,6 +26,7 @@ const Order = () => {
         dispatch(setUpdateCart({ id, name, value }))
 
     }
+
 
 
 
@@ -48,7 +50,6 @@ const Order = () => {
                                     width="80px"
                                     alt="photos"
                                 />
-
                             </Col>
 
                             <Col>
@@ -66,20 +67,20 @@ const Order = () => {
 
                         </Row>
 
-
-
-
-
-
                     ))}
                     <hr>
                     </hr>
                     <Row className='m-5'>
                         Total:  $ {sum}
 
-                        <Button className='cardButton m-3' style={{ width: '100%', background: "grey", color: "white", border: "1px solid grey" }} >
-                            <bold>CheckOut</bold>
-                        </Button>
+                        <Link to="checkout">
+                            <Button className='cardButton m-3' style={{ width: '100%', background: "grey", color: "white", border: "1px solid grey" }} >
+                                <bold>CheckOut</bold>
+                            </Button>
+                        </Link>
+                        {/* <Route path="/checkout">
+                            <Checkout cart={cart} sum={sum} />
+                        </Route> */}
 
 
                     </Row>

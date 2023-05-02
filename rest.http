@@ -1,0 +1,10 @@
+@url= http://localhost:8001/api/v1
+
+
+### product
+GET {{url}}/product
+
+
+
+### payments
+GET {{url}}/payment

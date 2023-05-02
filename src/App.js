@@ -14,6 +14,7 @@ import PrivateDashboard from './pages/dashboard/PrivateDashboard';
 import Category from './pages/category/Category';
 import ProductPage from './pages/Product/ProductPage';
 import Order from './pages/orders/Order';
+import Checkout from './pages/checkout/Checkout';
 
 
 
@@ -41,6 +42,7 @@ function App() {
           <Route path="account/profile" element={<ProfilePage />} />
           <Route path="account" element={<PrivateDashboard />} />
           <Route path="/order/" element={<Order />} />
+          <Route path="order/checkout" element={<Checkout />} />
 
 
         </Routes>
