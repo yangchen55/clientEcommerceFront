@@ -5,6 +5,7 @@ import authReducer from "./pages/login/authSlice";
 import productReducer from "./pages/Product/productSlice";
 import categoryReducer from "./pages/category/categorySlice";
 import cartReducer from "./pages/Product/CartSlice";
+import orderReducer from "./pages/checkout/OrderSlice"
 
 // // Define the persist config for each reducer
 // const authPersistConfig = {
@@ -43,7 +44,8 @@ const store = configureStore({
         user: authReducer,
         product: productReducer,
         category: persistedCategoryReducer,
-        cart: persistedCartReducer
+        cart: persistedCartReducer,
+        order: orderReducer
     }
 });
 

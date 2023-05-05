@@ -61,9 +61,6 @@ const NavHead = () => {
                                 >
 
                                     {categories.map((item, index) => (
-                                        // <NavDropdown.Item key={index} href={`product/${item._id}`}>
-                                        //     {item.name}
-                                        // </NavDropdown.Item>
                                         <NavDropdown.Item key={index} onClick={(e) => handleProduct(e, item._id)
                                         }>
                                             <Link to={`/category/${item.slug}`}>{item.name}</Link>

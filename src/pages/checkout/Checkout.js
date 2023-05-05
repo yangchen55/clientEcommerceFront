@@ -8,29 +8,51 @@ import './checkout.css';
 import { autoLogin } from '../login/authAction';
 import Accordion from 'react-bootstrap/Accordion';
 import { fetchPayment } from '../../helper/axios';
+import { postOrderAction } from './CheckoutAction';
 
 const Checkout = () => {
     const dispatch = useDispatch()
     const { cart } = useSelector((state) => state.cart)
     const { user } = useSelector((state) => state.user)
     const [payment, setPayment] = useState([])
-    const [order, setOrder] = useState([])
+    const [order, setOrder] = useState({})
+
+    const sum = cart.reduce((acc, curr) => {
+        return acc + parseInt(curr?.shopQty) * parseInt(curr?.price);
+    }, 0);
+
+    const Qty = cart.reduce((acc, curr) => {
+        return acc + parseInt(curr?.shopQty);
+    }, 0);
 
 
+    const handleOnPlaceOrder = (e) => {
+        e.preventDefault()
+        // const [yo] = cart;
+        // const { name, qty, price, shopQty } = yo
 
-    const handleOnPlaceOrder = () => {
-        console.log(order)
+        // const newOrder = { ...order, name, price, shopQty, qty, sum, Qty };
+        const newOrder = { ...order, cart }
+        console.log(newOrder)
+        dispatch(postOrderAction(newOrder))
+
 
     }
 
     const handleOnClick = (e) => {
         const { name, value } = e.target
-        setOrder({
-            ...order, ...user,
-            [name]: value,
+        const { fName, lName, email, phone, _id } = user
 
-        }
-        )
+        setOrder({
+            ...order,
+            [name]: value,
+            fName, lName, email, phone, _id,
+        },
+        );
+
+        console.log(order)
+
+
 
 
     }
@@ -38,7 +60,6 @@ const Checkout = () => {
 
 
     const getAllPayment = async () => {
-
         const { paymentMethods } = await fetchPayment()
         setPayment(paymentMethods)
     }
@@ -48,13 +69,7 @@ const Checkout = () => {
         getAllPayment()
     }, [dispatch])
 
-    const sum = cart.reduce((acc, curr) => {
-        return acc + parseInt(curr?.shopQty) * parseInt(curr?.price);
-    }, 0);
 
-    const Qty = cart.reduce((acc, curr) => {
-        return acc + parseInt(curr?.shopQty);
-    }, 0);
 
     const d = 9;
     return (
@@ -65,19 +80,22 @@ const Checkout = () => {
             </div>
             <div className="scroller">
                 <Container className='mainPage'>
-                    <Row>
-                        <Col className="deliver">
-                            <div>
+                    <Form onSubmit={handleOnPlaceOrder}>
+                        <Row>
+                            <Col className="deliver">
+                                <div>
 
-                                Dear {user.fName} {user.lName}, Your registered email  {user.email}
+                                    Hi 👋 {user.fName} {user.lName} <br></br>
 
-                                we will contact via this
-                                {user.phone}
-                            </div>
-                            <h5> Delivery address </h5>
-                            <hr></hr>
+                                    {/* Your registered email  {user.email}
 
-                            <Form>
+
+                                {user.phone} */}
+                                </div>
+                                <h5 className='mt-3 text-center'> Delivery address </h5>
+                                <hr></hr>
+
+
                                 <Row className="mb-3 p-3">
 
                                     <Form.Group as={Col} md="6" controlId="validationCustom03">
@@ -133,6 +151,7 @@ const Checkout = () => {
                                                             id="debit-card"
                                                             value={item?.name}
                                                             onChange={handleOnClick}
+                                                            required
                                                         />
                                                     </Accordion.Header>
                                                     <Accordion.Body>
@@ -147,64 +166,51 @@ const Checkout = () => {
 
 
 
-
                                 </Row>
-                            </Form>
+
+                            </Col>
+                            <Col className='orderSummary '>
+                                <h6 className='text-center mt-4'>order Details</h6>
+                                <hr></hr>
+                                <Row>
+                                    <Col> your trolley ({Qty} items)</Col>
+                                    <Col className='text-end'> ${sum}</Col>
+                                </Row>
+                                {cart.map((item, index) => (
+                                    <Row style={{ color: "grey" }}>
+                                        <Col> {item?.name} * {item?.shopQty}</Col>
+                                        <Col className='text-end'> ${item?.price}</Col>
+                                    </Row>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        </Col>
-                        <Col className='orderSummary '>
-                            <h6 className='text-center mt-4'>order Details</h6>
-                            <hr></hr>
-                            <Row>
-                                <Col> your trolley ({Qty} items)</Col>
-                                <Col className='text-end'> ${sum}</Col>
-                            </Row>
-                            {cart.map((item, index) => (
+                                ))}
                                 <Row style={{ color: "grey" }}>
-                                    <Col> {item?.name} * {item?.shopQty}</Col>
-                                    <Col className='text-end'> ${item?.price}</Col>
+                                    <Col> Delivery</Col>
+                                    <Col className='text-end'>${d}</Col>
                                 </Row>
+                                <hr></hr>
+                                <Row >
+                                    <Col> total(with Gst)</Col>
+                                    <Col className='text-end'> ${sum + d}</Col>
+                                    <p style={{ color: "grey", fontSize: "10px", margin_top: "10px" }}> Price, savings and bagging quantity shown are estimates only and you’ll be charged the final amount after your order is packed. A pending payment may be withheld when you place your order. Learn more </p>
 
+                                </Row>
+                                <div>
+                                    <input type="checkbox" id="myCheckbox" name="myCheckbox" value="myCheckboxValue" required />
+                                    <label for="myCheckbox" style={{ fontsize: "2px" }}>I have read and agree to the  <a href='' className='text-end'>customer agreement</a>
+                                    </label>
 
-                            ))}
-                            <Row style={{ color: "grey" }}>
-                                <Col> Delivery</Col>
-                                <Col className='text-end'>${d}</Col>
-                            </Row>
-                            <hr></hr>
-                            <Row >
-                                <Col> total(with Gst)</Col>
-                                <Col className='text-end'> ${sum + d}</Col>
-                                <p style={{ color: "grey", fontSize: "10px", margin_top: "10px" }}> Price, savings and bagging quantity shown are estimates only and you’ll be charged the final amount after your order is packed. A pending payment may be withheld when you place your order. Learn more </p>
+                                </div>
 
-                            </Row>
-                            <div>
-                                <input type="checkbox" id="myCheckbox" name="myCheckbox" value="myCheckboxValue" />
-                                <label for="myCheckbox" style={{ fontsize: "2px" }}>I have read and agree to the  <a href='' className='text-end'>customer agreement</a>
-                                </label>
-
-                            </div>
-                            <Button className='place_order mt-3' variant='success' onClick={handleOnPlaceOrder}>place order</Button>
+                                <Button className='place_order mt-3' variant='success' type='submit'>place order</Button>
 
 
 
-                        </Col>
-                    </Row>
+
+                            </Col>
+                        </Row>
+                    </Form>
+
 
 
 

@@ -4,7 +4,7 @@ const userApi = rootUrl + "/user";
 const productApi = rootUrl + "/product";
 const catApi = rootUrl + "/category";
 const paymentApi = rootUrl + "/payment";
-
+const orderApi = rootUrl + "/order";
 
 const fetchProcessor = async ({ method, url, data, token, isPrivate }) => {
     try {
@@ -155,9 +155,22 @@ export const fetchPayment = async () => {
     const obj = {
         method: "get",
         url,
-        // isPrivate: true,
+        isPrivate: true,
     };
 
 
     return fetchProcessor(obj);
 };
+
+export const postOrder = async (order) => {
+    const url = orderApi + "/add";
+    const obj = {
+        method: "post",
+        url,
+        // isPrivate: true,
+        data: order,
+    };
+
+    return fetchProcessor(obj);
+
+}

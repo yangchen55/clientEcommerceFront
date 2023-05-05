@@ -1,14 +1,20 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import Banner from "../../components/Banner";
+import ProductCard from "../Product/ProductCard";
 import ProfilePage from "../profile/ProfilePage";
 import { Footer } from "./Footer";
 import { GlobalMsg } from "./GlobalMsg";
 import { Header } from "./Header";
 import NavHead from "./NavHead";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 export const AdminLayout = ({ slideshow, productCard }) => {
+  const { filteredProducts } = useSelector((state) => state.product);
   return (
     <>
       <div className="sticky-head">
@@ -17,23 +23,28 @@ export const AdminLayout = ({ slideshow, productCard }) => {
         <NavHead />
       </div >
       <div className="scroller">
-        {slideshow}
 
 
-        <Container className="mainPage m-5">
+        {filteredProducts.length > 0 ? (
 
-          {productCard}
-
-
-          {/* <Row className="d-flex justify-content-around">
-            <Col lg={3} md={6} sm={12}>{productCard}</Col>
-            <Col lg={3} md={6} sm={12}>{productCard}</Col>
-            <Col lg={3} md={6} sm={12}>{productCard}</Col>
-            <Col lg={3} className="d-none d-md-block" md={6} sm={12}>{productCard} </Col>
-          </Row> */}
+          <div className="mt-5">
+            {productCard}
+          </div>
 
 
-        </Container>
+
+
+
+        ) : (
+          <>
+
+            {slideshow}
+            <Container className="mainPage m-5">
+              {productCard}
+            </Container>
+          </>
+        )}
+
         <Banner />
 
         <Footer />

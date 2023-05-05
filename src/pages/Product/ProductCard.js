@@ -14,11 +14,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 
 const ProductCard = () => {
-    const { products } = useSelector((state) => state.product);
-
+    const { products, filteredProducts } = useSelector((state) => state.product);
     const dispatch = useDispatch()
     const navigate = useNavigate();
-
 
     useEffect(() => {
         dispatch(fetchProductAction());
@@ -29,48 +27,99 @@ const ProductCard = () => {
     return (
         <div>
             <Row className="d-flex justify-content-around">
-                {products.map((item, index) => (
-                    <Col lg={3} md={6} sm={12}>
-                        <Link to={`/product/${item.slug}`}>
-                            <Card style={{ width: '16rem' }}
-                                className="m-3 card"
-                            >
-                                <Card.Img variant="top" src={process.env.REACT_APP_DOMAIN + item?.mainImage.substr(6)} />
-                                <Card.Body>
-                                    <Card.Title>{item.name}</Card.Title>
-                                    <Card.Text> Price: {item.price}</Card.Text>
+                {filteredProducts.length > 0 ?
 
-                                    <Card.Text></Card.Text>
-                                    <RatingStar
-                                        count={5}
-                                        size={24}
-                                        activeColor="#ffd700"
-                                        value={item.ratings}
-                                        edit={false}
-                                    />
+                    <>
 
-                                    <Card.Subtitle className="mb-2 text-muted"> Available: {item.qty}</Card.Subtitle>
+                        {filteredProducts.map((item, index) => (
+                            <Col lg={3} md={6} sm={12}>
+                                <Link to={`/product/${item.slug}`}>
+                                    <Card style={{ width: '16rem' }}
+                                        className="m-3 card"
+                                    >
+                                        <Card.Img variant="top" src={process.env.REACT_APP_DOMAIN + item?.mainImage.substr(6)} />
+                                        <Card.Body>
+                                            <Card.Title>{item.name}</Card.Title>
+                                            <Card.Text> Price: {item.price}</Card.Text>
 
+                                            <Card.Text></Card.Text>
+                                            <RatingStar
+                                                count={5}
+                                                size={24}
+                                                activeColor="#ffd700"
+                                                value={item.ratings}
+                                                edit={false}
+                                            />
 
-
-
-                                    <Button className='cardButton' style={{ width: '100%', background: "white", color: "black", border: "1px solid grey" }} >
-                                        <i className="fa-solid fa-cart-plus" style={{ color: "#111213" }}> </i>
-                                    </Button>
+                                            <Card.Subtitle className="mb-2 text-muted"> Available: {item.qty}</Card.Subtitle>
 
 
 
 
-
-
-                                </Card.Body>
-                            </Card>
-                        </Link>
-                    </Col>
+                                            <Button className='cardButton' style={{ width: '100%', background: "white", color: "black", border: "1px solid grey" }} >
+                                                <i className="fa-solid fa-cart-plus" style={{ color: "#111213" }}> </i>
+                                            </Button>
 
 
 
-                ))}
+
+
+
+                                        </Card.Body>
+                                    </Card>
+                                </Link>
+                            </Col>
+                        ))}
+                    </>
+
+                    :
+                    <>
+
+                        {products.map((item, index) => (
+                            <Col lg={3} md={6} sm={12}>
+                                <Link to={`/product/${item.slug}`}>
+                                    <Card style={{ width: '16rem' }}
+                                        className="m-3 card"
+                                    >
+                                        <Card.Img variant="top" src={process.env.REACT_APP_DOMAIN + item?.mainImage.substr(6)} />
+                                        <Card.Body>
+                                            <Card.Title>{item.name}</Card.Title>
+                                            <Card.Text> Price: {item.price}</Card.Text>
+
+                                            <Card.Text></Card.Text>
+                                            <RatingStar
+                                                count={5}
+                                                size={24}
+                                                activeColor="#ffd700"
+                                                value={item.ratings}
+                                                edit={false}
+                                            />
+
+                                            <Card.Subtitle className="mb-2 text-muted"> Available: {item.qty}</Card.Subtitle>
+
+
+
+
+                                            <Button className='cardButton' style={{ width: '100%', background: "white", color: "black", border: "1px solid grey" }} >
+                                                <i className="fa-solid fa-cart-plus" style={{ color: "#111213" }}> </i>
+                                            </Button>
+
+
+
+
+
+
+                                        </Card.Body>
+                                    </Card>
+                                </Link>
+                            </Col>
+
+
+
+                        ))}
+
+                    </>
+                }
 
             </Row>
         </div >
