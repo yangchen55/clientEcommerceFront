@@ -34,7 +34,7 @@ const NavHead = () => {
 
     return (
         <>
-            <Navbar key="sm" expand="sm" className=" p-2 nav-head">
+            <Navbar key="sm" expand="sm" className="p-2 nav-head">
                 <Container fluid>
                     <Navbar.Brand href="/">shop all</Navbar.Brand>
                     <Navbar.Toggle placement="start" aria-controls="offcanvasNavbar-expand-sm" />
@@ -50,7 +50,7 @@ const NavHead = () => {
                         <Offcanvas.Body>
                             <Nav className="justify-content-around flex-grow-1 pe-1">
 
-                                <Nav.Link >
+                                <Nav.Link href='/order/orderHistory'>
                                     bought Before
                                 </Nav.Link>
 

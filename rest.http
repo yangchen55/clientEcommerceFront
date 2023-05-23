@@ -8,3 +8,14 @@ GET {{url}}/product
 
 ### payments
 GET {{url}}/payment
+
+
+### paymentsstripe
+POST  {{url}}/payment/create-payment-intent
+Content-Type: application/json
+
+{
+  "amount": 1000,
+  "currency": "USD",
+  "payment_method_types": ["card"]
+}

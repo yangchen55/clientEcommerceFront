@@ -1,19 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-    order: []
+
+    orderList: []
 }
 const orderSlice = createSlice({
     name: "order",
     initialState,
     reducers: {
-        setAddToOrder: (state, { payload = [] }) => {
-            state.order = payload
-
+        setAddToOrderList: (state, { payload = [] }) => {
+            if (state.orderList.length === 0 && payload.length === 0) return
+            state.orderList = payload
         }
     }
 
 })
 
 const { reducer, actions } = orderSlice;
-export const { setAddToOrder } = actions
+export const { setAddToOrderList } = actions
 export default reducer;

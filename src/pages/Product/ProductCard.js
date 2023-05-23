@@ -79,9 +79,10 @@ const ProductCard = () => {
                             <Col lg={3} md={6} sm={12}>
                                 <Link to={`/product/${item.slug}`}>
                                     <Card style={{ width: '16rem' }}
-                                        className="m-3 card"
+                                        className="card" s
                                     >
-                                        <Card.Img variant="top" src={process.env.REACT_APP_DOMAIN + item?.mainImage.substr(6)} />
+                                        <Card.Img variant="top" src={process.env.REACT_APP_DOMAIN + item?.mainImage.substr(6)} className="product-card-image" />
+
                                         <Card.Body>
                                             <Card.Title>{item.name}</Card.Title>
                                             <Card.Text> Price: {item.price}</Card.Text>

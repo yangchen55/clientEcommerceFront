@@ -26,11 +26,14 @@ const cartSlice = createSlice({
                 state.cart[itemIndex][name] = value;
             }
         },
+        setEmptyCart: (state, action) => {
+            state.cart = []
+        }
 
 
     }
 
 });
 const { reducer, actions } = cartSlice;
-export const { setAddtoCard, setUpdateCart, setRemoveFromCard } = actions
+export const { setAddtoCard, setUpdateCart, setRemoveFromCard, setEmptyCart } = actions
 export default reducer;

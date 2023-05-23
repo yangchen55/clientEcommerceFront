@@ -1,13 +1,22 @@
-import { fetchPayment, postOrder } from "../../helper/axios";
-import { setAddToOrder } from "./OrderSlice";
+import { toast } from "react-toastify";
 
-// export const fetchPaymentAction = () => async (dispatch) => {
-//     const { status, paymentMethods } = await fetchPayment()
-//     status == "success" & dispatch(setPayments({ paymentMethods }))
-// }
+import { fetchPayment, getOrderList, postOrder } from "../../helper/axios";
+import { setEmptyCart } from "../Product/CartSlice";
+import { setAddToOrderList } from "./OrderSlice";
+
+
 
 export const postOrderAction = (obj) => async (dispatch) => {
-    dispatch(setAddToOrder(obj)) && postOrder(obj)
-    // console.log(obj, " i reached Action")
+    const order = await postOrder(obj)
+    if (order.status == "success") {
+        dispatch(setEmptyCart()) && toast("Item added to order successfully!");
+    }
+    console.log(order)
+}
 
+export const getOrderAction = (_id) => async (dispatch) => {
+    const { status, orderList, message } = await getOrderList(_id)
+    if (status == "success") {
+        dispatch(setAddToOrderList(orderList))
+    }
 }

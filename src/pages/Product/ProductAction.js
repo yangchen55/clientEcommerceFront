@@ -8,7 +8,6 @@ export const fetchProductAction = () => async (dispatch) => {
 }
 export const fetchCatProductAction = (_id) => async (dispatch) => {
     const { status, products } = await fetchProduct(_id)
-    console.log(status, products)
     status == "success" && dispatch(setProducts(products))
 }
 

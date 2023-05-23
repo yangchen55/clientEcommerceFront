@@ -4,6 +4,7 @@ const userApi = rootUrl + "/user";
 const productApi = rootUrl + "/product";
 const catApi = rootUrl + "/category";
 const paymentApi = rootUrl + "/payment";
+
 const orderApi = rootUrl + "/order";
 
 const fetchProcessor = async ({ method, url, data, token, isPrivate }) => {
@@ -50,7 +51,6 @@ export const postEmailVerification = async (data) => {
         url,
         data,
     };
-
     return fetchProcessor(obj);
 };
 
@@ -132,7 +132,7 @@ export const fetchProduct = async (_id) => {
     const obj = {
         method: "get",
         url,
-        // isPrivate: true,
+        isPrivate: true,
     };
 
     return fetchProcessor(obj);
@@ -145,7 +145,7 @@ export const fetchCategory = async () => {
     const obj = {
         method: "get",
         url,
-        // isPrivate: true,
+        isPrivate: true,
     };
     return fetchProcessor(obj);
 };
@@ -161,16 +161,40 @@ export const fetchPayment = async () => {
 
     return fetchProcessor(obj);
 };
+export const postPaymentStripe = async (payment) => {
+    const url = paymentApi + "/create-payment-intent";
+    const obj = {
+        method: "post",
+        url,
+        data: payment
+    };
+    return fetchProcessor(obj);
+}
+
+
 
 export const postOrder = async (order) => {
     const url = orderApi + "/add";
     const obj = {
         method: "post",
         url,
-        // isPrivate: true,
+        isPrivate: true,
         data: order,
     };
 
     return fetchProcessor(obj);
 
 }
+export const getOrderList = async (userId) => {
+    const url = orderApi + "/" + userId
+
+    const obj = {
+        method: "get",
+        url,
+        isPrivate: true
+    }
+    return fetchProcessor(obj);
+
+}
+
+

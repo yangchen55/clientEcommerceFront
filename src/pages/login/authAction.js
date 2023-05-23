@@ -13,9 +13,9 @@ export const loginAction = (formData) => async (dispatch) => {
             const { accessJWT, refreshJWT } = toknes;
             sessionStorage.setItem("accessJWT", accessJWT);
             localStorage.setItem("refreshJWT", refreshJWT);
-            console.log("first")
+
             dispatch(getAdminProfile());
-            // dispatch(requestSuccess(user))
+
 
         } else {
             status === "error" && message.includes("register") && dispatch(setNotRegistered(newcustomer))
@@ -33,8 +33,6 @@ export const loginAction = (formData) => async (dispatch) => {
 
 const getAdminProfile = () => async (dispatch) => {
     const { status, user } = await fetchAdminProfile();
-    console.log("from get admin profe", status)
-
     status === "success"
         ? dispatch(requestSuccess(user))
         : dispatch(requestSuccess({}));
@@ -42,7 +40,6 @@ const getAdminProfile = () => async (dispatch) => {
 
 export const updateProfileAction = (data) => async (dispatch) => {
     const { status, message } = await updateProfile(data);
-    console.log(data, "ireached profile action")
     toast[status](message);
     status === "success" && dispatch(getAdminProfile());
 
@@ -54,7 +51,7 @@ export const autoLogin = () => async (dispatch) => {
 
     const accessJWT = sessionStorage.getItem("accessJWT");
     const refreshJWT = localStorage.getItem("refreshJWT");
-    console.log("i reached authot lofin", accessJWT)
+
 
     if (accessJWT) {
         dispatch(getAdminProfile());

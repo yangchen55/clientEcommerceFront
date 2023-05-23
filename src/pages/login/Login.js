@@ -32,13 +32,12 @@ const Login = () => {
         }
         // disptach login action to call api
         dispatch(loginAction(formDt));
-        console.log(notRegisteredUser)
+
     }
     useEffect(() => {
         if (user?._id) {
             navigate(origin)
         } else {
-
             dispatch(autoLogin())
         };
         if (notRegisteredUser?.email) {

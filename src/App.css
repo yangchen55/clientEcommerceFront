@@ -71,6 +71,12 @@
   background-color: rgba(106, 111, 111, 0.599);
 }
 /* slideshow */
+
+.slideshow-image {
+  height: 500px;
+  width: 100%;
+  object-fit: cover;
+}
 .caption-area {
   background-color: rgba(37, 191, 222, 0.274);
   padding-bottom: 20px;
@@ -79,6 +85,19 @@
 }
 
 /* card  */
+
+/* imaage  */
+
+.card {
+  height: 400px !important;
+  margin: 10px;
+}
+.product-card-image {
+  height: 50%;
+  object-fit: cover;
+  background-color: rgb(16, 171, 119);
+}
+
 .card:hover {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(128, 128, 128, 0.482);
@@ -111,14 +130,12 @@
 }
 .sticky-head {
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   background-color: #fff;
-  z-index: 5;
+  z-index: 3;
 }
 .scroller {
-  padding-top: 210px; /* height of the fixed header */
+  padding-top: 150px; /* height of the fixed header */
 }
 @media (max-width: 768px) {
   .scroller {
@@ -143,3 +160,7 @@
   overflow: auto;
   white-space: nowrap;
 }
+
+/* .hide-nav .nav-head {
+  display: none;
+} */

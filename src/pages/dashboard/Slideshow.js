@@ -2,22 +2,21 @@ import React from 'react'
 import Carousel from 'react-bootstrap/Carousel';
 
 import { Container, Button } from 'react-bootstrap';
-import a from '../../assets/b.png';
-import b from '../../assets/a.png';
-import c from "../../assets/c.webp"
-import d from "../../assets/d.jpeg"
-import e from "../../assets/e.avif"
+import a from '../../assets/slideshow1.jpg';
+import b from '../../assets/slideshow2.jpg';
+import c from "../../assets/slideshow3.jpg"
+
 const Slideshow = () => {
     const images = [
         {
-            image: c,
+            image: a,
             caption: "this is suppose to be inteeresting",
             variant: "success",
             buttonText: "shop",
             interval: 10000
         },
         {
-            image: c,
+            image: b,
             caption: "this is suppose to be inteeresting",
             variant: "primary",
             buttonText: "sales",
@@ -34,11 +33,11 @@ const Slideshow = () => {
     ]
 
     return (
-        <Carousel>
+        <Carousel className='carou'>
             {images.map((item, index) => (
                 <Carousel.Item interval={item.interval}>
                     <img
-                        className="d-block w-100"
+                        className="slideshow-image"
                         src={item.image}
                         alt="First slide"
                     />

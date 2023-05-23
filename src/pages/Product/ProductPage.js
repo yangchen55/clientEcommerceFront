@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Card, Row, Container, Col, Form, Button } from 'react-bootstrap';
@@ -9,6 +9,7 @@ import NavHead from '../layout/NavHead';
 import { Footer } from '../layout/Footer';
 import { setAddtoCard } from "./CartSlice";
 import ProductCard from "./ProductCard";
+import { fetchProductAction } from "./ProductAction";
 
 
 
@@ -18,6 +19,7 @@ const ProductPage = () => {
     const { slug } = useParams();
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    console.log(products, slug, " ia m from producy")
     const filterProduct = products.length ? products.find(item => item.slug === slug) : null;
 
 
@@ -35,9 +37,6 @@ const ProductPage = () => {
         //descructure the product infos
         const { name, _id, qty, price, mainImage, slug, description } = filterProduct;
 
-
-
-
         // create an obj to send to the cart
         const obj = {
             shopQty: form,
@@ -48,6 +47,10 @@ const ProductPage = () => {
         dispatch(setAddtoCard(obj));
 
     }
+    useEffect(() => {
+        dispatch(fetchProductAction());
+    }, [dispatch]);
+
     return (
         <>
             <div className="sticky-head">
@@ -61,23 +64,19 @@ const ProductPage = () => {
                         <Col>
 
                             <img src={process.env.REACT_APP_DOMAIN + filterProduct?.mainImage.substr(6)} height="80%" width="80%" />
+                            {/* <img src={process.env.REACT_APP_DOMAIN + filterProduct?.images[1].substr(6)} height="80%" width="80%" /> */}
                             <h3>Product Details</h3>
                             <hr></hr>
-                            <div>{filterProduct.description}</div>
-
-
-
-
-
+                            <div>{filterProduct?.description}</div>
 
                         </Col>
                         <Col>
                             <Form onSubmit={handleAddToCard}>
                                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                                    <h1> {filterProduct.name}</h1>
-                                    <h2> Price : $ {filterProduct.price}</h2>
+                                    <h1> {filterProduct?.name}</h1>
+                                    <h2> Price : $ {filterProduct?.price}</h2>
                                     <Form.Label>Quantity </Form.Label>
-                                    <Form.Control type="number" name="productQty" min="1" max={filterProduct.qty} defaultValue="1" onChange={handleOnChange}
+                                    <Form.Control type="number" name="productQty" min="1" max={filterProduct?.qty} defaultValue="1" onChange={handleOnChange}
                                     />
                                     <RatingStar
                                         count={5}
@@ -87,7 +86,7 @@ const ProductPage = () => {
                                         edit={false}
                                     />
                                 </Form.Group>
-                                <Card.Subtitle className="mb-2 text-muted"> Available: {filterProduct.qty}</Card.Subtitle>
+                                <Card.Subtitle className="mb-2 text-muted"> Available: {filterProduct?.qty}</Card.Subtitle>
 
                                 <Button className='cardButton' style={{ width: '100%', background: "white", color: "black", border: "1px solid grey" }}
                                     type="submit" >

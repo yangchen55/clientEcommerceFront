@@ -7,17 +7,28 @@ import React, { useState, useEffect } from 'react'
 import './checkout.css';
 import { autoLogin } from '../login/authAction';
 import Accordion from 'react-bootstrap/Accordion';
-import { fetchPayment } from '../../helper/axios';
+import { fetchPayment, postPaymentStripe } from '../../helper/axios';
 import { postOrderAction } from './CheckoutAction';
+import { isPending } from '@reduxjs/toolkit';
+import Swal from "sweetalert2"
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
 
 const Checkout = () => {
     const dispatch = useDispatch()
     const { cart } = useSelector((state) => state.cart)
     const { user } = useSelector((state) => state.user)
+    const d = 9;
     const [payment, setPayment] = useState([])
     const [order, setOrder] = useState({})
+    const stripe = useStripe()
+    const elements = useElements()
+    const [payStatus, setPayStatus] = useState("not paid")
 
-    const sum = cart.reduce((acc, curr) => {
+    const { fName, email } = user;
+    const name = fName
+
+
+    const totalAmount = cart.reduce((acc, curr) => {
         return acc + parseInt(curr?.shopQty) * parseInt(curr?.price);
     }, 0);
 
@@ -26,35 +37,82 @@ const Checkout = () => {
     }, 0);
 
 
-    const handleOnPlaceOrder = (e) => {
+
+    const handleSuccess = () => {
+        Swal.fire({
+            icon: "success",
+            title: "Your payment was successful",
+            timer: 4000,
+            allowOutsideClick: false,
+        })
+    }
+    const handleFail = () => {
+        Swal.fire({
+            icon: "error",
+            title: "Something went wrong. Payment was not successful",
+            timer: 4000,
+            allowOutsideClick: false,
+        })
+    }
+
+    const handlePayment = async (e) => {
         e.preventDefault()
-        // const [yo] = cart;
-        // const { name, qty, price, shopQty } = yo
+        if (!stripe || !elements) {
+            return
+        }
+        try {
+            const data = {
+                amount: totalAmount * 100,
+                currency: "aud",
+                paymentMethodType: "card",
+            }
 
-        // const newOrder = { ...order, name, price, shopQty, qty, sum, Qty };
-        const newOrder = { ...order, cart }
-        console.log(newOrder)
-        dispatch(postOrderAction(newOrder))
+            const result = await postPaymentStripe(data)
+            const { clientSecret } = result
+            const { paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: elements.getElement(CardElement),
+                    billing_details: {
+                        name,
+                        email,
+                    },
+                },
+            })
 
+            if (paymentIntent.status === "succeeded") {
+                handleSuccess()
+                setPayStatus("success")
+
+            }
+        } catch (error) {
+            handleFail()
+            setPayStatus("pending")
+
+        }
+    }
+    const handleOnPlaceOrder = async (e) => {
+        e.preventDefault()
+        const { paymentMethod, ...rest } = order
+        const paymentDetails = {
+            paymentMethod, payStatus, totalAmount
+        }
+        const newOrder = { ...rest, cart, paymentDetails }
+        payStatus == "success" && dispatch(postOrderAction(newOrder))
 
     }
+
 
     const handleOnClick = (e) => {
         const { name, value } = e.target
         const { fName, lName, email, phone, _id } = user
+        const userId = _id
 
         setOrder({
-            ...order,
+            ...order, userId,
             [name]: value,
-            fName, lName, email, phone, _id,
+            fName, lName, email, phone
         },
         );
-
-        console.log(order)
-
-
-
-
     }
 
 
@@ -64,14 +122,16 @@ const Checkout = () => {
         setPayment(paymentMethods)
     }
 
+
     useEffect(() => {
         dispatch(autoLogin())
         getAllPayment()
+
     }, [dispatch])
 
 
 
-    const d = 9;
+
     return (
         <>
             <div className="sticky-head">
@@ -80,6 +140,7 @@ const Checkout = () => {
             </div>
             <div className="scroller">
                 <Container className='mainPage'>
+
                     <Form onSubmit={handleOnPlaceOrder}>
                         <Row>
                             <Col className="deliver">
@@ -155,7 +216,19 @@ const Checkout = () => {
                                                         />
                                                     </Accordion.Header>
                                                     <Accordion.Body>
-                                                        {item?.description}
+                                                        {item?.name === "Credit card" ?
+                                                            <div>
+                                                                <CardElement className=" mb-3" options={{ hidePostalCode: true }} />
+                                                                <Button variant="success" onClick={handlePayment}>
+                                                                    Pay
+
+                                                                </Button>
+                                                            </div>
+
+                                                            : item?.description
+                                                        }
+
+
                                                     </Accordion.Body>
                                                 </Accordion.Item>
 
@@ -174,7 +247,7 @@ const Checkout = () => {
                                 <hr></hr>
                                 <Row>
                                     <Col> your trolley ({Qty} items)</Col>
-                                    <Col className='text-end'> ${sum}</Col>
+                                    <Col className='text-end'> ${totalAmount}</Col>
                                 </Row>
                                 {cart.map((item, index) => (
                                     <Row style={{ color: "grey" }}>
@@ -191,7 +264,7 @@ const Checkout = () => {
                                 <hr></hr>
                                 <Row >
                                     <Col> total(with Gst)</Col>
-                                    <Col className='text-end'> ${sum + d}</Col>
+                                    <Col className='text-end'> ${totalAmount + d}</Col>
                                     <p style={{ color: "grey", fontSize: "10px", margin_top: "10px" }}> Price, savings and bagging quantity shown are estimates only and you’ll be charged the final amount after your order is packed. A pending payment may be withheld when you place your order. Learn more </p>
 
                                 </Row>
@@ -210,6 +283,7 @@ const Checkout = () => {
                             </Col>
                         </Row>
                     </Form>
+
 
 
 

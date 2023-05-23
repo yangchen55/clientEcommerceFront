@@ -8,6 +8,7 @@ import { Link, Route } from 'react-router-dom';
 import ProductPage from '../Product/ProductPage';
 import { setRemoveFromCard, setUpdateCart } from '../Product/CartSlice';
 import Checkout from '../checkout/Checkout';
+import ProductCard from '../Product/ProductCard';
 
 const Order = () => {
     const dispatch = useDispatch()
@@ -37,58 +38,68 @@ const Order = () => {
                 <Header />
             </div>
             <div className="scroller">
-                <Container className="mainPage">
-                    <h2 className='text-center'>  Trolly - There are  {cart.length} items</h2>
-                    <hr></hr>
-                    {cart.map((item, index) => (
+                {cart.length == 0 ?
+
+                    <p>
+                        your cart is empty.
+                        <ProductCard />
+                    </p>
+                    :
+
+                    <Container className="mainPage">
+                        <h2 className='text-center'>  Trolly - There are  {cart.length} items</h2>
+                        <hr></hr>
+                        {cart.map((item, index) => (
 
 
-                        <Row key={index} className="order">
-                            <Col className='m-3'>
-                                <img
-                                    src={item?.mainImage && process.env.REACT_APP_DOMAIN + item.mainImage.substr(6)}
-                                    width="80px"
-                                    alt="photos"
-                                />
-                            </Col>
+                            <Row key={index} className="order">
+                                <Col className='m-3'>
+                                    <img
+                                        src={item?.mainImage && process.env.REACT_APP_DOMAIN + item.mainImage.substr(6)}
+                                        width="80px"
+                                        alt="photos"
+                                    />
+                                </Col>
 
-                            <Col>
-                                <Link style={{ color: 'black', textDecoration: 'none' }} to={`/product/${item?.slug}`}> <bold> {item?.name} </bold> </Link>
-                                <div className='d-flex justify-content-around'>
-                                    <input type="number" name="shopQty" defaultValue={item?.shopQty} min={1} max={item?.qty} inputMode="numeric" style={{ appearance: 'textfield' }} onClick={(e) => handleOnQty(item?._id, e)} />
-                                    <span style={{ textDecoration: 'underline', cursor: 'pointer', color: 'grey' }} onClick={() => handleRemove(item?._id)}>remove</span>
-                                </div>
+                                <Col>
+                                    <Link style={{ color: 'black', textDecoration: 'none' }} to={`/product/${item?.slug}`}> <bold> {item?.name} </bold> </Link>
+                                    <div className='d-flex justify-content-around'>
+                                        <input type="number" name="shopQty" defaultValue={item?.shopQty} min={1} max={item?.qty} inputMode="numeric" style={{ appearance: 'textfield' }} onClick={(e) => handleOnQty(item?._id, e)} />
+                                        <span style={{ textDecoration: 'underline', cursor: 'pointer', color: 'grey' }} onClick={() => handleRemove(item?._id)}>remove</span>
+                                    </div>
 
 
-                            </Col>
-                            <Col className='text-end'>
-                                <h3>  ${item?.price}</h3>
-                            </Col>
+                                </Col>
+                                <Col className='text-end'>
+                                    <h3>  ${item?.price}</h3>
+                                </Col>
+
+                            </Row>
+
+                        ))}
+                        <hr>
+                        </hr>
+                        <Row className='m-5'>
+                            Total:  $ {sum}
+
+                            <Link to="checkout">
+                                <Button className='cardButton m-3' style={{ width: '100%', background: "grey", color: "white", border: "1px solid grey" }} >
+                                    <bold>CheckOut</bold>
+                                </Button>
+                            </Link>
+
+
 
                         </Row>
 
-                    ))}
-                    <hr>
-                    </hr>
-                    <Row className='m-5'>
-                        Total:  $ {sum}
-
-                        <Link to="checkout">
-                            <Button className='cardButton m-3' style={{ width: '100%', background: "grey", color: "white", border: "1px solid grey" }} >
-                                <bold>CheckOut</bold>
-                            </Button>
-                        </Link>
-                        {/* <Route path="/checkout">
-                            <Checkout cart={cart} sum={sum} />
-                        </Route> */}
-
-
-                    </Row>
 
 
 
+                    </Container>
 
-                </Container>
+
+                }
+
             </div >
 
 
