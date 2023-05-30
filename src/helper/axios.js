@@ -9,6 +9,7 @@ const orderApi = rootUrl + "/order";
 
 const fetchProcessor = async ({ method, url, data, token, isPrivate }) => {
     try {
+        console.log(rootUrl)
         const jwtToken = token || sessionStorage.getItem("accessJWT");
 
         const headers = isPrivate
