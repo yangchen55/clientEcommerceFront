@@ -1,5 +1,5 @@
 import axios from "axios"
-const rootUrl = process.env.NODE_ENV === 'production' ? process.env.ROOT_API : "http://localhost:8001/api/v1";
+const rootUrl = process.env.NODE_ENV !== 'production' ? process.env.REACT_APP_ROOT_API : "http://localhost:8001/api/v1";
 const userApi = rootUrl + "/user";
 const productApi = rootUrl + "/product";
 const catApi = rootUrl + "/category";
@@ -7,9 +7,10 @@ const paymentApi = rootUrl + "/payment";
 
 const orderApi = rootUrl + "/order";
 
+
 const fetchProcessor = async ({ method, url, data, token, isPrivate }) => {
     try {
-        console.log(rootUrl)
+
         const jwtToken = token || sessionStorage.getItem("accessJWT");
 
         const headers = isPrivate
