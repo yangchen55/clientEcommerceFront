@@ -1,4 +1,3 @@
-
 import { Container, Row, Col, Button, Form, Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import { GlobalMsg } from '../layout/GlobalMsg'
@@ -9,9 +8,9 @@ import { autoLogin } from '../login/authAction';
 import Accordion from 'react-bootstrap/Accordion';
 import { fetchPayment, postPaymentStripe } from '../../helper/axios';
 import { postOrderAction } from './CheckoutAction';
-import { isPending } from '@reduxjs/toolkit';
 import Swal from "sweetalert2"
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
+import { toast } from 'react-toastify';
 
 const Checkout = () => {
     const dispatch = useDispatch()
@@ -24,8 +23,8 @@ const Checkout = () => {
     const elements = useElements()
     const [payStatus, setPayStatus] = useState("not paid")
 
-    const { fName, email } = user;
-    const name = fName
+    // const { fName, email } = user;
+    // const name = fName
 
 
     const totalAmount = cart.reduce((acc, curr) => {
@@ -60,11 +59,12 @@ const Checkout = () => {
         if (!stripe || !elements) {
             return
         }
+        const { paymentMethod, ...rest } = order
         try {
             const data = {
                 amount: totalAmount * 100,
                 currency: "aud",
-                paymentMethodType: "card",
+                paymentMethodType: paymentMethod
             }
 
             const result = await postPaymentStripe(data)
@@ -73,9 +73,9 @@ const Checkout = () => {
                 payment_method: {
                     card: elements.getElement(CardElement),
                     billing_details: {
-                        name,
-                        email,
-                    },
+                        name: user.fName,
+                        email: user.email
+                    }
                 },
             })
 
@@ -97,7 +97,10 @@ const Checkout = () => {
             paymentMethod, payStatus, totalAmount
         }
         const newOrder = { ...rest, cart, paymentDetails }
-        payStatus == "success" && dispatch(postOrderAction(newOrder))
+        payStatus == "success" ?
+            dispatch(postOrderAction(newOrder))
+            : toast("It seems like you haven't paid. please pay first")
+
 
     }
 
@@ -216,7 +219,7 @@ const Checkout = () => {
                                                         />
                                                     </Accordion.Header>
                                                     <Accordion.Body>
-                                                        {item?.name === "Credit card" ?
+                                                        {item?.name === "card" ?
                                                             <div>
                                                                 <CardElement className=" mb-3" options={{ hidePostalCode: true }} />
                                                                 <Button variant="success" onClick={handlePayment}>

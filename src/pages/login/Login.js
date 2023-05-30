@@ -17,8 +17,6 @@ const Login = () => {
     const passRef = useRef("");
     const location = useLocation();
     const { isLoading, user, notRegisteredUser } = useSelector((state) => state.user);
-    console.log(user, "i am from login n empty")
-
     const origin = location?.state?.from?.pathname || "/";
 
     const handleOnSubmit = (e) => {
@@ -88,7 +86,7 @@ const Login = () => {
                                 {isLoading ? (
                                     <Spinner variant="dark" animation="border" />
                                 ) : (
-                                    " Submit"
+                                    "Submit"
                                 )}
                             </Button>
                             <div className="mt-2 text-end">

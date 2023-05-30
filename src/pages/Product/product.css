@@ -1,0 +1,9 @@
+.imageColumn {
+  overflow: auto;
+  white-space: nowrap;
+  padding: 10px;
+}
+
+.imageColumn img {
+  padding: 10px;
+}

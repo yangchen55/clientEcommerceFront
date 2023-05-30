@@ -12,11 +12,7 @@ const History = () => {
     const { user } = useSelector((state) => state.user)
     const dispatch = useDispatch()
     const navigate = useNavigate();
-
     const { orderList } = useSelector((state) => state.order)
-
-
-
 
     useEffect(() => {
         dispatch(getOrderAction(user._id))
@@ -40,9 +36,7 @@ const History = () => {
                                         <Row key={index} >
 
                                             <Col >
-
                                                 <h6> Total  orders: <br></br>  {item?.cart.length}</h6>
-
                                             </Col>
 
 

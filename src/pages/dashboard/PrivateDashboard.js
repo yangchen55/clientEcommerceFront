@@ -58,7 +58,6 @@ const PrivateDashboard = () => {
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="second">
                                     <ProfilePage />
-
                                 </Tab.Pane>
                             </Tab.Content>
                         </Col>

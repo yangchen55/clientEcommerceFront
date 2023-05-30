@@ -130,6 +130,7 @@ export const Header = () => {
                           <i class="fa-solid fa-user-pen me-5"> </i>
                           <span className="fw-bold"> Profile </span>
                         </Link>
+
                       </NavDropdown.Item>
                       <NavDropdown.Item href="#action5">
                         <i class="fa-brands fa-cc-visa me-5"></i>

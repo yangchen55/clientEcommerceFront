@@ -10,6 +10,7 @@ import { Footer } from '../layout/Footer';
 import { setAddtoCard } from "./CartSlice";
 import ProductCard from "./ProductCard";
 import { fetchProductAction } from "./ProductAction";
+import './product.css'
 
 
 
@@ -61,22 +62,27 @@ const ProductPage = () => {
             <div className="scroller">
                 <Container className="mainPage">
                     <Row className="mt-5">
-                        <Col>
+                        <h3 className="m-2 text-center">Product Details</h3>
+
+                        <Col className="mt-2">
 
                             <img src={process.env.REACT_APP_DOMAIN + filterProduct?.mainImage.substr(6)} height="80%" width="80%" />
-                            {/* <img src={process.env.REACT_APP_DOMAIN + filterProduct?.images[1].substr(6)} height="80%" width="80%" /> */}
-                            <h3>Product Details</h3>
-                            <hr></hr>
-                            <div>{filterProduct?.description}</div>
+
+
+
+
+
+
+
 
                         </Col>
-                        <Col>
+                        <Col className="mt-5">
                             <Form onSubmit={handleAddToCard}>
                                 <Form.Group className="mb-3" controlId="formBasicPassword">
                                     <h1> {filterProduct?.name}</h1>
-                                    <h2> Price : $ {filterProduct?.price}</h2>
+                                    <h6> Price : $ {filterProduct?.price}</h6>
                                     <Form.Label>Quantity </Form.Label>
-                                    <Form.Control type="number" name="productQty" min="1" max={filterProduct?.qty} defaultValue="1" onChange={handleOnChange}
+                                    <Form.Control type="number" name="productQty" min="1" max={filterProduct?.qty} placeholder="1" onChange={handleOnChange}
                                     />
                                     <RatingStar
                                         count={5}
@@ -88,13 +94,22 @@ const ProductPage = () => {
                                 </Form.Group>
                                 <Card.Subtitle className="mb-2 text-muted"> Available: {filterProduct?.qty}</Card.Subtitle>
 
+
                                 <Button className='cardButton' style={{ width: '100%', background: "white", color: "black", border: "1px solid grey" }}
                                     type="submit" >
                                     <i className="fa-solid fa-cart-plus" style={{ color: "#111213" }}> </i>
                                 </Button>
+                                <div>{filterProduct?.description}</div>
 
                             </Form>
                         </Col>
+                    </Row>
+                    <Row className="imageRow">
+                        {filterProduct?.images.map((i, it) => (
+                            <Col className="imageColumn">
+                                <img src={process.env.REACT_APP_DOMAIN + i.substr(6)} width="80%" />
+                            </Col>
+                        ))}
                     </Row>
 
 
