@@ -50,9 +50,9 @@ const NavHead = () => {
                         <Offcanvas.Body>
                             <Nav className="justify-content-around flex-grow-1 pe-1">
 
-                                <Nav.Link href='/order/orderHistory'>
+                                <Link to='/order/orderHistory'>
                                     bought Before
-                                </Nav.Link>
+                                </Link>
 
 
                                 <NavDropdown
