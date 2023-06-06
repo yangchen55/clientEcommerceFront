@@ -55,7 +55,7 @@ const Order = () => {
                             <Row key={index} className="order">
                                 <Col className='m-3'>
                                     <img
-                                        src={item?.mainImage && process.env.REACT_APP_DOMAIN + item.mainImage.substr(6)}
+                                        src={item?.mainImage && item.mainImage}
                                         width="80px"
                                         alt="photos"
                                     />

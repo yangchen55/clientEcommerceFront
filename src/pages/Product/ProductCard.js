@@ -37,7 +37,8 @@ const ProductCard = () => {
                                     <Card style={{ width: '16rem' }}
                                         className="m-3 card"
                                     >
-                                        <Card.Img variant="top" src={process.env.REACT_APP_DOMAIN + item?.mainImage.substr(6)} />
+
+                                        <Card.Img variant="top" src={item?.mainImage} />
                                         <Card.Body>
                                             <Card.Title>{item.name}</Card.Title>
                                             <Card.Text> Price: {item.price}</Card.Text>
@@ -52,9 +53,6 @@ const ProductCard = () => {
                                             />
 
                                             <Card.Subtitle className="mb-2 text-muted"> Available: {item.qty}</Card.Subtitle>
-
-
-
 
                                             <Button className='cardButton' style={{ width: '100%', background: "white", color: "black", border: "1px solid grey" }} >
                                                 <i className="fa-solid fa-cart-plus" style={{ color: "#111213" }}> </i>
@@ -81,7 +79,7 @@ const ProductCard = () => {
                                     <Card style={{ width: '16rem' }}
                                         className="card" s
                                     >
-                                        <Card.Img variant="top" src={process.env.REACT_APP_DOMAIN + item?.mainImage.substr(6)} className="product-card-image" />
+                                        <Card.Img variant="top" src={item?.mainImage} className="product-card-image" />
 
                                         <Card.Body>
                                             <Card.Title>{item.name}</Card.Title>

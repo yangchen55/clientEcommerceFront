@@ -4,7 +4,6 @@ const userApi = rootUrl + "/user";
 const productApi = rootUrl + "/product";
 const catApi = rootUrl + "/category";
 const paymentApi = rootUrl + "/payment";
-
 const orderApi = rootUrl + "/order";
 
 

@@ -66,14 +66,7 @@ const ProductPage = () => {
 
                         <Col className="mt-2">
 
-                            <img src={process.env.REACT_APP_DOMAIN + filterProduct?.mainImage.substr(6)} height="80%" width="80%" />
-
-
-
-
-
-
-
+                            <img src={filterProduct?.mainImage} height="80%" width="80%" />
 
                         </Col>
                         <Col className="mt-5">
@@ -107,7 +100,7 @@ const ProductPage = () => {
                     <Row className="imageRow">
                         {filterProduct?.images.map((i, it) => (
                             <Col className="imageColumn">
-                                <img src={process.env.REACT_APP_DOMAIN + i.substr(6)} width="80%" />
+                                <img src={i} width="80%" />
                             </Col>
                         ))}
                     </Row>
